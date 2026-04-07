@@ -1,0 +1,375 @@
+Response:
+
+(RAG) PS D:\G_AI\RAG> python .\src\app.py
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|████████████████████████████████████████████████████████████████████████████████████| 103/103 [00:00<00:00, 3241.69it/s]
+BertModel LOAD REPORT from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:   can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[INFO] Loaded embedding model: all-MiniLM-L6-v2
+[INFO] Skipping directory: pdf
+[INFO] Skipping directory: text_files
+[INFO] Skipping directory: vector_store
+D:\G_AI\RAG\data\pdf\Basic Process Control.pdf
+.pdf
+[DEBUG] Loading .PDF: Basic Process Control.pdf
+[DEBUG] Success: Loaded 17 chunks
+D:\G_AI\RAG\data\pdf\Basics of Linux-for Practice.pdf
+.pdf
+[DEBUG] Loading .PDF: Basics of Linux-for Practice.pdf
+[DEBUG] Success: Loaded 29 chunks
+D:\G_AI\RAG\data\pdf\cloudintro-lec01.ppt
+.ppt
+[SKIP] Unsupported format: cloudintro-lec01.ppt
+D:\G_AI\RAG\data\pdf\Introduction to Linux Commands.pdf
+.pdf
+[DEBUG] Loading .PDF: Introduction to Linux Commands.pdf
+[DEBUG] Success: Loaded 31 chunks
+D:\G_AI\RAG\data\pdf\Kubernetes Complete Material.pdf
+.pdf
+[DEBUG] Loading .PDF: Kubernetes Complete Material.pdf
+[DEBUG] Success: Loaded 293 chunks
+D:\G_AI\RAG\data\text_files\deployment_notes.txt
+.txt
+[DEBUG] Loading .TXT: deployment_notes.txt
+[DEBUG] Success: Loaded 1 chunks
+D:\G_AI\RAG\data\text_files\python_file.txt
+.txt
+[DEBUG] Loading .TXT: python_file.txt
+[DEBUG] Success: Loaded 1 chunks
+D:\G_AI\RAG\data\text_files\vector_basics.txt
+.txt
+[DEBUG] Loading .TXT: vector_basics.txt
+[DEBUG] Success: Loaded 1 chunks
+[INFO] Skipping directory: b71d8290-a80f-44d9-92a3-b70f3f96e47b
+D:\G_AI\RAG\data\vector_store\chroma.sqlite3
+.sqlite3
+[SKIP] Unsupported format: chroma.sqlite3
+D:\G_AI\RAG\data\vector_store\b71d8290-a80f-44d9-92a3-b70f3f96e47b\data_level0.bin
+.bin
+[SKIP] Unsupported format: data_level0.bin
+D:\G_AI\RAG\data\vector_store\b71d8290-a80f-44d9-92a3-b70f3f96e47b\header.bin
+.bin
+[SKIP] Unsupported format: header.bin
+D:\G_AI\RAG\data\vector_store\b71d8290-a80f-44d9-92a3-b70f3f96e47b\length.bin
+.bin
+[SKIP] Unsupported format: length.bin
+D:\G_AI\RAG\data\vector_store\b71d8290-a80f-44d9-92a3-b70f3f96e47b\link_lists.bin
+.bin
+[SKIP] Unsupported format: link_lists.bin
+
+[TOTAL] Consolidated 373 document chunks into pipeline.
+[INFO] Building vector store from 373 raw documents...
+Loading weights: 100%|███████████████████████████████████████████████████████████████████████████████████| 103/103 [00:00<00:00, 19342.44it/s]
+BertModel LOAD REPORT from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  |
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  |
+
+Notes:
+- UNEXPECTED:   can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[INFO] Loaded embedding model: all-MiniLM-L6-v2
+[INFO] Split 373 documents into 1656 chunks.
+[INFO] Generating embeddings for 1656 chunks...
+Batches: 100%|████████████████████████████████████████████████████████████████████████████████████████████████| 52/52 [00:08<00:00,  6.31it/s]
+[INFO] Embeddings shape: (1656, 384)
+[INFO] Added 1656 vectors to Faiss index.
+[INFO] Saved Faiss index and metadata to faiss_store
+[INFO] Vector store built and saved to faiss_store
+[INFO] Groq LLM initialized: meta-llama/llama-4-scout-17b-16e-instruct
+[INFO] Querying vector store for: 'Explain about all the kubernetes cluster components ?'
+Summary :  Here is a summary of the context for the query:
+
+The context appears to be a discussion about Kubernetes cluster components. The speaker claims to have added details about five servers, which will provide an overview of the cluster's high-level components, including:
+
+* Current and desired state management
+* Stability of the cluster
+* Node failures
+
+The speaker also mentions that they will explain four components of a Kubernetes cluster using a real-time example, specifically:
+
+* Worker Nodes (referred to as "Storefronts")
+* Kubelet (referred to as "Store Managers")
+
+However, the context does not provide a comprehensive list of all Kubernetes cluster components.
+
+To answer your query, here are the main Kubernetes cluster components:
+
+### Kubernetes Cluster Components
+
+#### Control Plane Components
+1. **API Server**: The API server is the entry point for all REST requests to the cluster. It validates and processes the requests, then stores the data in etcd.
+2. **Scheduler**: The scheduler watches for newly created pods with no assigned node and selects a node for them to run on.
+3. **Controller Manager**: The controller manager runs controllers, which regulate the state of the cluster.
+4. **etcd**: etcd is a consistent and highly-available key-value store used as Kubernetes' backing store for all cluster data.
+
+#### Worker Node Components
+1. **Kubelet**: The kubelet is an agent that runs on each node in the cluster. It starts pods and ensures that containers are running in a pod.
+2. **Container Runtime**: The container runtime is the software that runs containers on a node. Kubernetes supports several container runtimes, including Docker.
+However, the context does not provide a comprehensive list of all Kubernetes cluster components.
+
+To answer your query, here are the main Kubernetes cluster components:
+
+### Kubernetes Cluster Components
+
+#### Control Plane Components
+1. **API Server**: The API server is the entry point for all REST requests to the cluster. It validates and processes the requests, then stores the data in etcd.
+2. **Scheduler**: The scheduler watches for newly created pods with no assigned node and selects a node for them to run on.
+3. **Controller Manager**: The controller manager runs controllers, which regulate the state of the cluster.
+4. **etcd**: etcd is a consistent and highly-available key-value store used as Kubernetes' backing store for all cluster data.
+
+#### Worker Node Components
+1. **Kubelet**: The kubelet is an agent that runs on each node in the cluster. It starts pods and ensures that containers are running in a pod.2. **Container Runtime**: The container runtime is the software that runs containers on a node. Kubernetes supports several container runtimes, including Docker.
+### Kubernetes Cluster Components
+
+#### Control Plane Components
+1. **API Server**: The API server is the entry point for all REST requests to the cluster. It validates and processes the requests, then stores the data in etcd.
+2. **Scheduler**: The scheduler watches for newly created pods with no assigned node and selects a node for them to run on.
+3. **Controller Manager**: The controller manager runs controllers, which regulate the state of the cluster.
+4. **etcd**: etcd is a consistent and highly-available key-value store used as Kubernetes' backing store for all cluster data.
+
+#### Worker Node Components
+1. **Kubelet**: The kubelet is an agent that runs on each node in the cluster. It starts pods and ensures that containers are running in a pod.2. **Container Runtime**: The container runtime is the software that runs containers on a node. Kubernetes supports several container runtimes, including Docker.
+ the data in etcd.
+2. **Scheduler**: The scheduler watches for newly created pods with no assigned node and selects a node for them to run on.
+3. **Controller Manager**: The controller manager runs controllers, which regulate the state of the cluster.
+4. **etcd**: etcd is a consistent and highly-available key-value store used as Kubernetes' backing store for all cluster data.
+
+#### Worker Node Components
+1. **Kubelet**: The kubelet is an agent that runs on each node in the cluster. It starts pods and ensures that containers are running in a pod.2. **Container Runtime**: The container runtime is the software that runs containers on a node. Kubernetes supports several container runtimes, including Docker.
+
+#### Worker Node Components
+1. **Kubelet**: The kubelet is an agent that runs on each node in the cluster. It starts pods and ensures that containers are running in a pod.2. **Container Runtime**: The container runtime is the software that runs containers on a node. Kubernetes supports several container runtimes, including Docker.
+2. **Container Runtime**: The container runtime is the software that runs containers on a node. Kubernetes supports several container runtimes, including Docker.
+
+### Additional Components
+1. **Pods**: Pods are the basic execution unit in Kubernetes. They comprise one or more containers.
+2. **Services**: Services provide a network identity and load balancing for accessing a pod or group of pods.
+3. **Persistent Volumes (PVs) and StatefulSets**: PVs provide persistent storage for data that needs to be preserved across pod restarts. StatefulSets manage stateful applications.
+
+These components work together to provide a robust and scalable container orchestration system.
+
+Please let me know if you need any more information.
+(RAG) PS D:\G_AI\RAG>
+
+
+
+data_loader.py
+--------------
+
+from pathlib import Path
+from typing import List, Dict, Any, Tuple
+from langchain_community.document_loaders import (
+    PyPDFLoader, 
+    TextLoader, 
+    CSVLoader, 
+    Docx2txtLoader, 
+    JSONLoader,
+    UnstructuredPowerPointLoader # Added for .pptx
+)
+from langchain_community.document_loaders.excel import UnstructuredExcelLoader
+
+
+from pathlib import Path
+from typing import List, Any
+from langchain_community.document_loaders import (
+    PyPDFLoader, TextLoader, CSVLoader, 
+    Docx2txtLoader, UnstructuredPowerPointLoader
+)
+
+def load_all_documents(data_dir: str) -> List[Any]:
+    """
+    A generic loader that automatically detects file types and 
+    uses the appropriate LangChain loader.
+    """
+    data_path = Path(data_dir).resolve()
+    documents = []
+    
+    # Map extensions to their specific loader classes
+    LOADER_MAPPING = {
+        ".pdf": PyPDFLoader,
+        ".txt": TextLoader,
+        ".pptx": UnstructuredPowerPointLoader,
+        ".docx": Docx2txtLoader,
+        ".csv": CSVLoader
+    }
+
+    # Iterate through all files in the directory
+    for file_path in data_path.rglob('*'):
+        if file_path.is_file():
+            print(file_path)
+            ext = file_path.suffix.lower()
+            print(ext)
+        
+            if ext in LOADER_MAPPING:
+                print(f"[DEBUG] Loading {ext.upper()}: {file_path.name}")
+                try:
+                    # Initialize the specific loader for this file type
+                    loader_class = LOADER_MAPPING[ext]
+                    loader = loader_class(str(file_path))
+                    
+                    # Load the data and add to our master list
+                    loaded_docs = loader.load()
+                    documents.extend(loaded_docs)
+                    print(f"[DEBUG] Success: Loaded {len(loaded_docs)} chunks")
+                    
+                except Exception as e:
+                    print(f"[ERROR] Failed to load {file_path.name}: {e}")
+            else:
+                print(f"[SKIP] Unsupported format: {file_path.name}")
+        else:
+            print(f"[INFO] Skipping directory: {file_path.name}")
+
+    print(f"\n[TOTAL] Consolidated {len(documents)} document chunks into pipeline.")
+    return documents
+
+embedding:
+----------
+from typing import List, Any
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from sentence_transformers import SentenceTransformer
+import numpy as np
+
+
+class EmbeddingPipeline:
+    def __init__(self, model_name: str = "all-MiniLM-L6-v2", chunk_size: int = 1000, chunk_overlap: int = 200):
+        self.chunk_size = chunk_size
+        self.chunk_overlap = chunk_overlap
+        self.model = SentenceTransformer(model_name)
+        print(f"[INFO] Loaded embedding model: {model_name}")
+
+    def chunk_documents(self, documents: List[Any]) -> List[Any]:
+        splitter = RecursiveCharacterTextSplitter(
+            chunk_size=self.chunk_size,
+            chunk_overlap=self.chunk_overlap,
+            length_function=len,
+            separators=["\n\n", "\n", " ", ""]
+        )
+        chunks = splitter.split_documents(documents)
+        print(f"[INFO] Split {len(documents)} documents into {len(chunks)} chunks.")
+        return chunks
+
+    def embed_chunks(self, chunks: List[Any]) -> np.ndarray:
+        texts = [chunk.page_content for chunk in chunks]
+        print(f"[INFO] Generating embeddings for {len(texts)} chunks...")
+        embeddings = self.model.encode(texts, show_progress_bar=True)
+        print(f"[INFO] Embeddings shape: {embeddings.shape}")
+        return embeddings
+
+vector_Store:
+------------
+import os
+import faiss
+import numpy as np
+import pickle
+from typing import List, Any
+from sentence_transformers import SentenceTransformer
+from embeddings import EmbeddingPipeline
+
+class FaissVectorStore:
+    def __init__(self, persist_dir: str = "faiss_store", embedding_model: str = "all-MiniLM-L6-v2", chunk_size: int = 200, chunk_overlap: int = 20):
+        self.persist_dir = persist_dir
+        os.makedirs(self.persist_dir, exist_ok=True)
+        self.index = None
+        self.metadata = []
+        self.embedding_model = embedding_model
+        self.model = SentenceTransformer(embedding_model)
+        self.chunk_size = chunk_size
+        self.chunk_overlap = chunk_overlap
+        print(f"[INFO] Loaded embedding model: {embedding_model}")
+
+    def build_from_documents(self, documents: List[Any]):
+        print(f"[INFO] Building vector store from {len(documents)} raw documents...")
+        emb_pipe = EmbeddingPipeline(model_name=self.embedding_model, chunk_size=self.chunk_size, chunk_overlap=self.chunk_overlap)
+        chunks = emb_pipe.chunk_documents(documents)
+        embeddings = emb_pipe.embed_chunks(chunks)
+        metadatas = [{"text": chunk.page_content} for chunk in chunks]
+        self.add_embeddings(np.array(embeddings).astype('float32'), metadatas)
+        self.save()
+        print(f"[INFO] Vector store built and saved to {self.persist_dir}")
+
+    def add_embeddings(self, embeddings: np.ndarray, metadatas: List[Any] = None):
+        dim = embeddings.shape[1]
+        if self.index is None:
+            self.index = faiss.IndexFlatL2(dim)
+        self.index.add(embeddings)
+        if metadatas:
+            self.metadata.extend(metadatas)
+        print(f"[INFO] Added {embeddings.shape[0]} vectors to Faiss index.")
+
+    def save(self):
+        faiss_path = os.path.join(self.persist_dir, "faiss.index")
+        meta_path = os.path.join(self.persist_dir, "metadata.pkl")
+        faiss.write_index(self.index, faiss_path)
+        with open(meta_path, "wb") as f:
+            pickle.dump(self.metadata, f)
+        print(f"[INFO] Saved Faiss index and metadata to {self.persist_dir}")
+
+    def load(self):
+        faiss_path = os.path.join(self.persist_dir, "faiss.index")
+        meta_path = os.path.join(self.persist_dir, "metadata.pkl")
+        self.index = faiss.read_index(faiss_path)
+        with open(meta_path, "rb") as f:
+            self.metadata = pickle.load(f)
+        print(f"[INFO] Loaded Faiss index and metadata from {self.persist_dir}")
+
+    def search(self, query_embedding: np.ndarray, top_k: int = 5):
+        D, I = self.index.search(query_embedding, top_k)
+        results = []
+        for idx, dist in zip(I[0], D[0]):
+            meta = self.metadata[idx] if idx < len(self.metadata) else None
+            results.append({"index": idx, "distance": dist, "metadata": meta})
+        return results
+
+    def query(self, query_text: str, top_k: int = 5):
+        print(f"[INFO] Querying vector store for: '{query_text}'")
+        query_emb = self.model.encode([query_text]).astype('float32')
+        return self.search(query_emb, top_k=top_k)
+
+# Example usage
+if __name__ == "__main__":
+    from data_loader import load_all_documents
+    docs = load_all_documents("data")
+    store = FaissVectorStore("faiss_store")
+    store.build_from_documents(docs)
+    store.load()
+    print(store.query("List out all the kubernetes architecture components with clear explaination ?", top_k=3))
+
+search.py:
+-----------
+import os
+from dotenv import load_dotenv
+from vector_store import FaissVectorStore
+from langchain_groq import ChatGroq
+
+load_dotenv()
+
+class RAGSearch:
+    def __init__(self, persist_dir: str = "faiss_store", embedding_model: str = "all-MiniLM-L6-v2", llm_model: str = "meta-llama/llama-4-scout-17b-16e-instruct"):
+        self.vectorstore = FaissVectorStore(persist_dir, embedding_model)
+        # Load or build vectorstore
+        faiss_path = os.path.join(persist_dir, "faiss.index")
+        meta_path = os.path.join(persist_dir, "metadata.pkl")
+        if not (os.path.exists(faiss_path) and os.path.exists(meta_path)):
+            from data_loader import load_all_documents
+            docs = load_all_documents("data")
+            self.vectorstore.build_from_documents(docs)
+        else:
+            self.vectorstore.load()
+        groq_api_key = os.getenv("GROQ_API_KEY")
+        self.llm = ChatGroq(groq_api_key=groq_api_key, model_name=llm_model)
+        print(f"[INFO] Groq LLM initialized: {llm_model}")
+
+    def search_and_summarize(self, query: str, top_k: int = 5) -> str:
+        results = self.vectorstore.query(query, top_k=top_k)
+        texts = [r["metadata"].get("text", "") for r in results if r["metadata"]]
+        context = "\n\n".join(texts)
+        if not context:
+            return "No relevant documents found."
+        prompt = f"""Summarize the following context for the query: '{query}'\n\nContext:\n{context}\n\nSummary:"""
+        response = self.llm.invoke([prompt])
+        return response.content

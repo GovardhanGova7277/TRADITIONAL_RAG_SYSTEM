@@ -1,0 +1,1 @@
+Retrieval-Augmented Generation (RAG) is a technique that grants LLMs access to specific, private data. It works by converting text into vectors and using Cosine Similarity to find the most relevant pieces  of information to answer a user's question.

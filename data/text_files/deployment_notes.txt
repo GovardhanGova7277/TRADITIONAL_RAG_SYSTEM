@@ -1,0 +1,1 @@
+For a zero-rupee deployment, one can use Ollama for local LLM inference and LangChain for orchestration. This avoids expensive API costs while keeping data private on a local machine.

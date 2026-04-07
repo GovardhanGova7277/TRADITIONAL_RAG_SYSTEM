@@ -1,0 +1,1 @@
+Vector databases like ChromaDB or FAISS store mathematical representations of text. When a user asks a query, the system calculates the distance between the query vector and the stored document vectors.
