@@ -1,4 +1,4 @@
-# Traditional RAG System — Technical Documentation
+# Traditional RAG System - Technical Documentation
 
 > **A complete Retrieval-Augmented Generation pipeline** that processes multi-format documents, builds a FAISS vector index, and answers natural-language queries using Llama 4 Scout (via Groq).
 
@@ -19,14 +19,18 @@
 
 ---
 
+## RAG Architecture
+
+![RAG Architecture](rag_architecture_diagram.svg)
+
 ## Implementation Stack
 
 | Component | Technology |
 |-----------|-----------|
-| **Document Loader** | LangChain — `PyPDFLoader`, `TextLoader`, `Docx2txtLoader`, `CSVLoader`, `UnstructuredPowerPointLoader` |
-| **Text Splitter** | `RecursiveCharacterTextSplitter` — `chunk_size=1000`, `overlap=200` |
+| **Document Loader** | LangChain - `PyPDFLoader`, `TextLoader`, `Docx2txtLoader`, `CSVLoader`, `UnstructuredPowerPointLoader` |
+| **Text Splitter** | `RecursiveCharacterTextSplitter` - `chunk_size=1000`, `overlap=200` |
 | **Embedding Model** | `sentence-transformers/all-MiniLM-L6-v2` (384-dimensional dense vectors) |
-| **Vector Store** | FAISS `IndexFlatL2` — persisted as `faiss.index` + `metadata.pkl` |
+| **Vector Store** | FAISS `IndexFlatL2` - persisted as `faiss.index` + `metadata.pkl` |
 | **LLM** | `meta-llama/llama-4-scout-17b-16e-instruct` via Groq API |
 | **Runtime Stats** | 373 raw docs → 1,656 chunks → embedding matrix shape `(1656, 384)` |
 | **Language** | Python 3 |
@@ -59,7 +63,7 @@ User Query
 
 ### Purpose of This Implementation
 
-This pipeline was built to query a local corpus of technical study materials (Kubernetes, Linux, process control). It demonstrates a complete production-style RAG loop — from raw files on disk to a summarised answer — using entirely open-source tooling except for the Groq inference API.
+This pipeline was built to query a local corpus of technical study materials (Kubernetes, Linux, process control). It demonstrates a complete production-style RAG loop - from raw files on disk to a summarised answer - using entirely open-source tooling except for the Groq inference API.
 
 ---
 
@@ -92,8 +96,8 @@ Unsupported formats (`.ppt`, `.sqlite3`, `.bin`, etc.) are skipped with a `[SKIP
 | `.csv` | `CSVLoader` | One `Document` per row |
 
 Each `Document` object carries:
-- `page_content` — extracted plain-text string
-- `metadata` — dict with at minimum `{"source": "<file_path>"}`, plus `{"page": N}` for PDFs
+- `page_content` - extracted plain-text string
+- `metadata` - dict with at minimum `{"source": "<file_path>"}`, plus `{"page": N}` for PDFs
 
 > **Observed result:** 4 PDFs + 3 TXT files → **373 raw Document chunks** before splitting.
 
@@ -103,7 +107,7 @@ Each `Document` object carries:
 
 ### 3.1 Why Chunking Is Necessary
 
-The `all-MiniLM-L6-v2` embedding model has a hard maximum input of **256 word-pieces (~200 words)**. Any input exceeding this is silently truncated. Chunking also enables fine-grained retrieval — returning the precise paragraph that answers a question rather than an entire 50-page PDF.
+The `all-MiniLM-L6-v2` embedding model has a hard maximum input of **256 word-pieces (~200 words)**. Any input exceeding this is silently truncated. Chunking also enables fine-grained retrieval - returning the precise paragraph that answers a question rather than an entire 50-page PDF.
 
 ### 3.2 Configuration
 
@@ -130,12 +134,12 @@ The 200-character overlap ensures that sentences or concepts straddling a bounda
 ### 3.4 Advantages and Limitations
 
 **Advantages**
-- Semantically aware — prefers paragraph and sentence boundaries
-- Simple to tune — just two hyperparameters
+- Semantically aware - prefers paragraph and sentence boundaries
+- Simple to tune - just two hyperparameters
 - No external NLP models required
 
 **Limitations**
-- Character-based, not token-based — dense text (code, JSON) may hit the model's token limit even under 1,000 characters
+- Character-based, not token-based - dense text (code, JSON) may hit the model's token limit even under 1,000 characters
 - No semantic coherence guarantee per chunk
 - Overlap increases vector index size
 
@@ -149,7 +153,7 @@ The 200-character overlap ensures that sentences or concepts straddling a bounda
 
 | Property | Value |
 |----------|-------|
-| Architecture | BERT (MiniLM — 6-layer distilled) |
+| Architecture | BERT (MiniLM - 6-layer distilled) |
 | Output dimensions | **384** |
 | Max input length | 256 word-pieces |
 | Training objective | Contrastive similarity on NLI + STS-B pairs |
@@ -189,14 +193,14 @@ class EmbeddingPipeline:
 ### 4.5 Advantages and Limitations
 
 **Advantages**
-- Fast on CPU — small enough to run without a GPU
-- Good general-purpose performance — transfers well to technical text
+- Fast on CPU - small enough to run without a GPU
+- Good general-purpose performance - transfers well to technical text
 - Fully offline after initial download
 
 **Limitations**
-- 256 token hard truncation — tail of long chunks is silently dropped
-- English-centric — quality degrades on multilingual content
-- 384 dims — smaller than state-of-the-art models (e.g. OpenAI `text-embedding-3-large` = 3,072 dims)
+- 256 token hard truncation - tail of long chunks is silently dropped
+- English-centric - quality degrades on multilingual content
+- 384 dims - smaller than state-of-the-art models (e.g. OpenAI `text-embedding-3-large` = 3,072 dims)
 
 ---
 
@@ -206,15 +210,15 @@ class EmbeddingPipeline:
 
 A vector store is a data structure optimised for **nearest-neighbour search** in high-dimensional space. Given a query vector, it returns the `k` stored vectors that are closest according to a distance metric.
 
-### 5.2 FAISS — `IndexFlatL2`
+### 5.2 FAISS - `IndexFlatL2`
 
 | Aspect | Detail |
 |--------|--------|
 | Library | FAISS (Facebook AI Similarity Search) |
-| Index type | `IndexFlatL2` — exact brute-force L2 search |
+| Index type | `IndexFlatL2` - exact brute-force L2 search |
 | Vectors stored | 1,656 × 384 float32 |
 | Persistence | `faiss.write_index()` → `faiss.index`; metadata → `metadata.pkl` |
-| Distance metric | L2 (Euclidean) — lower = more similar |
+| Distance metric | L2 (Euclidean) - lower = more similar |
 
 ### 5.3 Build Flow
 
@@ -335,27 +339,27 @@ else:
 
 ### 8.1 Retrieval
 
-- **O(n·d) brute-force search** — `IndexFlatL2` scans every vector. Fine at 1,656 vectors; degrades beyond ~1 million.
-- **No re-ranking** — top-5 results are returned in raw L2 distance order without a cross-encoder.
-- **Text-only index** — tables, figures, and diagrams in PDFs are not extracted or embedded.
+- **O(n·d) brute-force search** - `IndexFlatL2` scans every vector. Fine at 1,656 vectors; degrades beyond ~1 million.
+- **No re-ranking** - top-5 results are returned in raw L2 distance order without a cross-encoder.
+- **Text-only index** - tables, figures, and diagrams in PDFs are not extracted or embedded.
 
 ### 8.2 Embedding
 
-- **256-token hard truncation** — the tail of any chunk longer than ~200 words is silently dropped before encoding.
-- **No asymmetric query/passage tuning** — `all-MiniLM-L6-v2` treats queries and passages identically; dedicated asymmetric models perform better.
-- **Static index** — adding/removing documents requires a full rebuild.
+- **256-token hard truncation** - the tail of any chunk longer than ~200 words is silently dropped before encoding.
+- **No asymmetric query/passage tuning** - `all-MiniLM-L6-v2` treats queries and passages identically; dedicated asymmetric models perform better.
+- **Static index** - adding/removing documents requires a full rebuild.
 
 ### 8.3 Generation
 
-- **Context window pressure** — 5 × 1,000-char chunks ≈ 5,000 chars of context, which may crowd the LLM on long prompts.
-- **Hardcoded prompt template** — no prompt versioning or A/B testing.
-- **No source citation** — the answer does not reference which chunk it was drawn from.
+- **Context window pressure** - 5 × 1,000-char chunks ≈ 5,000 chars of context, which may crowd the LLM on long prompts.
+- **Hardcoded prompt template** - no prompt versioning or A/B testing.
+- **No source citation** - the answer does not reference which chunk it was drawn from.
 
 ### 8.4 Scaling
 
-- **In-memory index** — the full FAISS index is held in RAM; millions of documents would exhaust memory.
-- **Synchronous, single-threaded** — cannot handle concurrent queries.
-- **No observability** — no latency tracking, error monitoring, or query logging.
+- **In-memory index** - the full FAISS index is held in RAM; millions of documents would exhaust memory.
+- **Synchronous, single-threaded** - cannot handle concurrent queries.
+- **No observability** - no latency tracking, error monitoring, or query logging.
 
 ---
 
@@ -400,8 +404,8 @@ Final context: top-5 after re-ranking
 
 ### 9.5 Query Optimisation
 
-- **HyDE** — generate a hypothetical answer with the LLM first; embed that answer as the retrieval query to bridge the query–document vocabulary gap.
-- **Multi-query** — generate 3–5 reformulations of the user's query; retrieve for each and union results before re-ranking.
+- **HyDE** - generate a hypothetical answer with the LLM first; embed that answer as the retrieval query to bridge the query–document vocabulary gap.
+- **Multi-query** - generate 3–5 reformulations of the user's query; retrieve for each and union results before re-ranking.
 
 ---
 
@@ -438,10 +442,10 @@ Final context: top-5 after re-ranking
 
 ### 10.3 Features
 
-- **Conversational memory** — include rolling chat history in the prompt for multi-turn Q&A.
-- **Source attribution** — append `(Source: filename, page N)` to every retrieved passage in the answer.
-- **Evaluation harness** — use [RAGAS](https://github.com/explodinggradients/ragas) to automatically score context relevance, answer faithfulness, and answer relevance.
-- **Metadata filtering** — allow queries like "only search the Kubernetes PDF" by adding a pre-filter on the metadata before vector search.
+- **Conversational memory** - include rolling chat history in the prompt for multi-turn Q&A.
+- **Source attribution** - append `(Source: filename, page N)` to every retrieved passage in the answer.
+- **Evaluation harness** - use [RAGAS](https://github.com/explodinggradients/ragas) to automatically score context relevance, answer faithfulness, and answer relevance.
+- **Metadata filtering** - allow queries like "only search the Kubernetes PDF" by adding a pre-filter on the metadata before vector search.
 
 ---
 
@@ -484,4 +488,3 @@ python src/app.py
 
 ---
 
-*Documentation generated from implementation log and source code analysis.*
