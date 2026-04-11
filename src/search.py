@@ -27,6 +27,6 @@ class RAGSearch:
         context = "\n\n".join(texts)
         if not context:
             return "No relevant documents found."
-        prompt = f"""Summarize the following context for the query: '{query}'\n\nContext:\n{context}\n\nSummary:"""
+        prompt = f"""As an expert in tech eveolution and world and solved complex problems can you check the documents and answer the query in a way that the user can get the knowledge and apply it to solve the real world problem and here is the following context for the query: '{query}'\n\nContext:\n{context}\n\n"""
         response = self.llm.invoke([prompt])
         return response.content
