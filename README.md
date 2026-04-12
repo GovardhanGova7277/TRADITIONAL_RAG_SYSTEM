@@ -1,6 +1,8 @@
-# Traditional RAG System - Technical Documentation
+# Traditional RAG System - Technical Documentation(https://multiragsystem.streamlit.app/)
 
 > **A complete Retrieval-Augmented Generation pipeline** that processes multi-format documents, builds a FAISS vector index, and answers natural-language queries using Llama 4 Scout (via Groq).
+
+<img width="1919" height="904" alt="image" src="https://github.com/user-attachments/assets/d2cc8680-d4ed-4e95-8627-1345958c02e5" />
 
 ---
 
